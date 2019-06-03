@@ -30,9 +30,10 @@ mongoose.connection.on("disconnected",function(){
 
 router.post("/",function(req, res, next){
 	let goodsUpload = JSON.parse(req.body.good);
+	let goodsImage = req.body.image;
+	console.log(goodsImage);
 	console.log(goodsUpload);
-
-	console.log('a.good.sort:',goodsUpload.sort);
+	// console.log('a.good.sort:',goodsUpload.sort);
 	let goodslistInsert = new goodslist({
 		'sort':goodsUpload.sort,
 		'age':goodsUpload.age,
@@ -66,6 +67,32 @@ router.post("/",function(req, res, next){
 });
 
 
+
+
+
+router.get("/getToken",function(req, res, next){
+
+	//引入七牛依赖
+	const qiniu = require("qiniu");
+	//客户端调用接口，生成token
+	let accessKey = 'lH8pcU3T2QqVRpFtKtLaSIKelEuUu268_FmTzvkA';
+	let secretKey = 'kN-QQtR1hkS5X2ufnTPRmbHjqJntDPRMQ8VadWPg';
+	let mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+	let options = {
+	  scope: 'uniappshare' //七牛资源目录
+	};
+	let putPolicy = new qiniu.rs.PutPolicy(options);
+	let uploadToken = putPolicy.uploadToken(mac);
+	console.log("uploadToken:"+uploadToken);
+	//把uploadToken返回给客户端
+
+	res.json({
+		status:'0',
+		msg:'',
+		uploadToken:uploadToken
+	});	
+
+});
 
  
 module.exports = router; 

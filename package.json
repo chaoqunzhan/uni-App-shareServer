@@ -19,6 +19,7 @@
     "jquery": "^3.3.1",
     "mongoose": "^5.3.13",
     "morgan": "~1.9.0",
+    "qiniu": "^7.2.1",
     "qs": "^6.6.0"
   },
   "devDependencies": {

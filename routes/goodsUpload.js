@@ -31,8 +31,11 @@ mongoose.connection.on("disconnected",function(){
 router.post("/",function(req, res, next){
 	let goodsUpload = JSON.parse(req.body.good);
 	let goodsImage = req.body.image;
-	console.log(goodsImage);
-	console.log(goodsUpload);
+	let goodupdate = new Date().toJSON().slice(0,10);
+	// console.log(goodupdate);
+	// console.log(goodsImage);
+	// console.log(goodsUpload);
+
 	// console.log('a.good.sort:',goodsUpload.sort);
 	let goodslistInsert = new goodslist({
 		'sort':goodsUpload.sort,
@@ -42,9 +45,8 @@ router.post("/",function(req, res, next){
 	    'phone':goodsUpload.phone,
 	    'address':goodsUpload.address,
 	    'describe':goodsUpload.describe,
-	    'date':"date",
-    	'image':"image"
-	    // "date":goodsUpload.date
+	    'date':goodupdate,
+    	'image':goodsImage
 	});
 
 	goodslistInsert.save(function(doc,len,err){

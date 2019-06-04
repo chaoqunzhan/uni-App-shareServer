@@ -14,7 +14,7 @@ var blogSchema = new Schema({
     'address':String,
     'describe':String,
     'date':String,
-    'image':String
+    'image':Array
 });
 
 module.exports = mongoose.model('goodslist',blogSchema);

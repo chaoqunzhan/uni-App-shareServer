@@ -26,7 +26,7 @@ mongoose.connection.on("disconnected",function(){
 });
 
 router.get("/",function(req,res,next){
-	// res.send('hello api');
+	console.log('hello api');
 	let sortFlag = req.param("sortFlag");
 	let params = {
 		"sort":sortFlag,

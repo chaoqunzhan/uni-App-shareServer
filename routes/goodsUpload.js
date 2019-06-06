@@ -38,6 +38,7 @@ router.post("/",function(req, res, next){
 
 	// console.log('a.good.sort:',goodsUpload.sort);
 	let goodslistInsert = new goodslist({
+		'owner':goodsUpload.owner,
 		'sort':goodsUpload.sort,
 		'age':goodsUpload.age,
 		'title':goodsUpload.title,

@@ -6,6 +6,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var blogSchema = new Schema({
+    'owner':String,
 	'sort':Number,
 	'age':Number,
 	'title':String,

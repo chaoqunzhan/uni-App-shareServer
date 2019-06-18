@@ -10,6 +10,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var goodslist = require('../models/goodsList');
+var owners = require('../models/owners');
 var qs = require('qs');
 
 let db = mongoose.connect('mongodb://127.0.0.1:27017/uniAppShare',{ useNewUrlParser: true });
@@ -31,6 +32,8 @@ mongoose.connection.on("disconnected",function(){
 router.post("/",function(req, res, next){
 	let goodsUpload = JSON.parse(req.body.good);
 	let goodsImage = req.body.image;
+	let goodsOwner = req.body.openid;
+	//console.log('goodsOwner:'+goodsOwner);
 	let goodupdate = new Date().toJSON().slice(0,10);
 	// console.log(goodupdate);
 	// console.log(goodsImage);
@@ -38,7 +41,7 @@ router.post("/",function(req, res, next){
 
 	// console.log('a.good.sort:',goodsUpload.sort);
 	let goodslistInsert = new goodslist({
-		'owner':goodsUpload.owner,
+		'owner':goodsOwner,
 		'sort':goodsUpload.sort,
 		'age':goodsUpload.age,
 		'title':goodsUpload.title,
@@ -67,6 +70,34 @@ router.post("/",function(req, res, next){
 			console.log('goodslistInsert succeed')
 		}
 	})
+
+
+// 添加owners的likes
+	// var likeIdArray = [''];
+	// let ownersModel = new owners({
+	// 	'owner':goodsOwner,
+	// 	'like':likeIdArray
+	// });
+
+
+	// let ownersModel = owners.find({}).exec(function(err,doc){
+	// 	if(err){
+	// 		res.json({
+	// 			status:'1',
+	// 			msg:err.message
+	// 		});	
+	// 	}else{
+	// 		res.json({
+	// 			status:'0',
+	// 			msg:'',
+	// 			result:{
+	// 				listcount:doc.length,
+	// 				list:doc
+	// 			}
+	// 		});
+	// 	}
+	// })
+
 });
 
 
@@ -86,7 +117,7 @@ router.get("/getToken",function(req, res, next){
 	};
 	let putPolicy = new qiniu.rs.PutPolicy(options);
 	let uploadToken = putPolicy.uploadToken(mac);
-	console.log("uploadToken:"+uploadToken);
+	//console.log("uploadToken:"+uploadToken);
 	//把uploadToken返回给客户端
 
 	res.json({

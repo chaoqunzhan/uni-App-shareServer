@@ -27,12 +27,14 @@ mongoose.connection.on("disconnected",function(){
 
 router.get("/",function(req,res,next){
 	console.log('hello api');
-	let sortFlag = req.param("sortFlag");
-	let params = {
-		"sort":sortFlag,
-	}
+	let item = parseInt(req.query.item);
+	console.log("item:"+item);
+	console.log(typeof(item));
+	// let params = {
+	// 	"item":item,
+	// }
 
-	let goodsListModel = goodslist.find({}).exec(function(err,doc){
+	let goodsListModel = goodslist.find({}).limit(4).skip(item).exec(function(err,doc){
 		if(err){
 			res.json({
 				status:'1',
